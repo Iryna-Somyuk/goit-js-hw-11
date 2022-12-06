@@ -1,5 +1,5 @@
 import './css/styles.css';
-import apiService from './fetctSubmit';
+import apiService from './fetctSubmit.js';
 
 
 // const refs = {
@@ -43,14 +43,16 @@ const loadBtn = document.querySelector('.load-more')
 
 loadBtn.addEventListener('click', onLoad);
 form.addEventListener('submit', onSearch);
-const apiService = new apiService();
 
-loadBtn.hidden = true;
-function onSearch(evn){
+const ApiService = new apiService();
+
+//loadBtn.hidden = true;
+function onSearch(evn) {
   evn.preventDefault();
-  apiService.query = evn.currentTarget.elements.searchQuery.value;
-  console.log(apiService.query);
-apiService.getUser1().then((data) => {
+  ApiService.query = evn.currentTarget.elements.searchQuery.value;
+  console.log(ApiService.query);
+ApiService.resetPage();
+ApiService.getUser1().then((data) => {
   console.log(data)
 });
 
@@ -59,7 +61,7 @@ apiService.getUser1().then((data) => {
 }
 
 function onLoad(){
-  apiService.getUser1();
+  ApiService.getUser1();
   }
   
 
