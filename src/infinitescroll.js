@@ -43,10 +43,10 @@ function onClear() {
 
 function onSearch(evn) {
   evn.preventDefault();
+
   ApiService.searchQuery = evn.currentTarget.elements.searchQuery.value;
   console.log(ApiService.searchQuery);
   if (ApiService.searchQuery === '') {
-
     onClear();
     return Notify.failure('Sorry, there are no images matching your search query. Please enter something!');
   }
