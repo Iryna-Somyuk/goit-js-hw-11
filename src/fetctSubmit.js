@@ -27,6 +27,7 @@ export default class apiService {
       }
 
       this.page += 1;
+
       return response.data;
     } catch (error) {
       Notify.failure(error.message);
@@ -36,12 +37,4 @@ export default class apiService {
   resetPage() {
     this.page = 1;
   }
-
-  // get query() {
-  //   return this.searchQuery;
-  // }
-
-  // set query(newQuery) {
-  //   this.searchQuery = newQuery;
-  // }
 }
