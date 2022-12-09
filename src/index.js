@@ -7,9 +7,11 @@ import apiService from './fetctSubmit.js';
 const form = document.querySelector('.search-form');
 const loadBtn = document.querySelector('.load-more');
 const listPhoto = document.querySelector('.gallery');
+const input = document.querySelector('[name=searchQuery]');
 
 loadBtn.addEventListener('click', onLoad);
 form.addEventListener('submit', onSearch);
+input.addEventListener('input', offLoad);
 
 let counter = 40;
 loadBtn.hidden = true;
@@ -19,11 +21,14 @@ const ApiService = new apiService();
 function onClear() {
   listPhoto.innerHTML = '';
 }
-
+function offLoad() {
+  loadBtn.hidden = true;
+}
 function onSearch(evn) {
   evn.preventDefault();
   ApiService.searchQuery = evn.currentTarget.elements.searchQuery.value;
   console.log(ApiService.searchQuery);
+
   if (ApiService.searchQuery === '') {
     loadBtn.hidden = true;
     onClear();
@@ -46,13 +51,17 @@ function onLoad() {
     if (counter >= data.totalHits) {
       // console.log(data.totalHits);
       loadBtn.hidden = true;
-      return Notify.failure("We're sorry, but you've reached the end of search results.");
+      return Notify.failure(
+        "We're sorry, but you've reached the end of search results."
+      );
     }
   });
 }
 
 function createMarkupGallery(data) {
-  const markupGallery = data.hits.map(({
+  const markupGallery = data.hits
+    .map(
+      ({
         webformatURL,
         largeImageURL,
         tags,
@@ -77,7 +86,8 @@ function createMarkupGallery(data) {
         </p>
       </div>
     </div>`
-    ).join('');
+    )
+    .join('');
 
   listPhoto.insertAdjacentHTML('beforeend', markupGallery);
 
@@ -96,8 +106,7 @@ function smoothScroll() {
     .firstElementChild.getBoundingClientRect();
 
   window.scrollBy({
-    top: cardHeight * 2,
+    top: cardHeight,
     behavior: 'smooth',
   });
 }
-
